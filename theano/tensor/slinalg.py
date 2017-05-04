@@ -209,19 +209,22 @@ class Solve(Op):
     For on CPU and GPU.
     """
 
-    __props__ = ('A_structure', 'lower', 'overwrite_A', 'overwrite_b')
+    __props__ = ('A_structure', 'lower', 'overwrite_A', 'overwrite_b', 'check_finite')
 
     def __init__(self,
                  A_structure='general',
                  lower=False,
                  overwrite_A=False,
-                 overwrite_b=False):
+                 overwrite_b=False,
+                 check_finite=True
+                 ):
         if A_structure not in MATRIX_STRUCTURES:
             raise ValueError('Invalid matrix structure argument', A_structure)
         self.A_structure = A_structure
         self.lower = lower
         self.overwrite_A = overwrite_A
         self.overwrite_b = overwrite_b
+        self.check_finite = check_finite
 
     def __repr__(self):
         return 'Solve{%s}' % str(self._props())
@@ -253,7 +256,11 @@ class Solve(Op):
             rval = scipy.linalg.solve_triangular(
                 A, b, lower=False)
         else:
-            rval = scipy.linalg.solve(A, b)
+            rval = scipy.linalg.solve(A, b,
+                                      overwrite_a=self.overwrite_A,
+                                      overwrite_b=self.overwrite_b,
+                                      check_finite=self.check_finite
+                                      )
         output_storage[0][0] = rval
 
     # computes shape of x where x = inv(A) * b
@@ -289,7 +296,10 @@ class Solve(Op):
         trans_solve_op = Solve(
             # update A_structure and lower to account for a transpose operation
             A_structure=trans_map.get(self.A_structure, self.A_structure),
-            lower=not self.lower
+            lower=not self.lower,
+            overwrite_a=self.overwrite_A,
+            overwrite_b=self.overwrite_b,
+            check_finite=self.check_finite
         )
         b_bar = trans_solve_op(A.T, c_bar)
         # force outer product if vector second input

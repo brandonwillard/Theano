@@ -74,7 +74,7 @@ class CLinkerObject(object):
             Subclass does not implement this method.
 
         """
-        raise utils.MethodNotDefined("c_headers", type(self), self.__class__.__name__)
+        raise utils.MethodNotDefined()
 
     def c_header_dirs(self):
         """
@@ -97,9 +97,7 @@ class CLinkerObject(object):
             Subclass does not implement this method.
 
         """
-        raise utils.MethodNotDefined(
-            "c_header_dirs", type(self), self.__class__.__name__
-        )
+        raise utils.MethodNotDefined()
 
     def c_libraries(self):
         """
@@ -122,7 +120,7 @@ class CLinkerObject(object):
             Subclass does not implement this method.
 
         """
-        raise utils.MethodNotDefined("c_libraries", type(self), self.__class__.__name__)
+        raise utils.MethodNotDefined()
 
     def c_lib_dirs(self):
         """
@@ -145,7 +143,7 @@ class CLinkerObject(object):
             Subclass does not implement this method.
 
         """
-        raise utils.MethodNotDefined("c_lib_dirs", type(self), self.__class__.__name__)
+        raise utils.MethodNotDefined()
 
     def c_support_code(self):
         """
@@ -161,9 +159,7 @@ class CLinkerObject(object):
             Subclass does not implement this method.
 
         """
-        raise utils.MethodNotDefined(
-            "c_support_code", type(self), self.__class__.__name__
-        )
+        raise utils.MethodNotDefined()
 
     def c_code_cache_version(self):
         """
@@ -202,7 +198,6 @@ class CLinkerObject(object):
 
         """
         raise utils.MethodNotDefined(
-            "c_compile_args", type(self), self.__class__.__name__
         )
 
     def c_no_compile_args(self):
@@ -225,7 +220,6 @@ class CLinkerObject(object):
 
         """
         raise utils.MethodNotDefined(
-            "c_no_compile_args", type(self), self.__class__.__name__
         )
 
     def c_init_code(self):
@@ -239,7 +233,7 @@ class CLinkerObject(object):
             The subclass does not override this method.
 
         """
-        raise utils.MethodNotDefined("c_init_code", type(self), self.__class__.__name__)
+        raise utils.MethodNotDefined()
 
 
 class CLinkerOp(CLinkerObject):

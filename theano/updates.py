@@ -47,8 +47,7 @@ class OrderedUpdates(OrderedDict):
         for key in self:
             if not isinstance(key, SharedVariable):
                 raise TypeError(
-                    "OrderedUpdates keys must inherit from SharedVariable", key
-                )
+                    "OrderedUpdates keys must inherit from SharedVariable")
 
     def __setitem__(self, key, value):
         if isinstance(key, SharedVariable):
@@ -63,8 +62,7 @@ class OrderedUpdates(OrderedDict):
             return super(OrderedUpdates, self).__setitem__(key, value)
         else:
             raise TypeError(
-                "OrderedUpdates keys must inherit from " "SharedVariable", key
-            )
+                "OrderedUpdates keys must inherit from SharedVariable")
 
     def update(self, other=None):
         if other is None:
@@ -85,7 +83,7 @@ class OrderedUpdates(OrderedDict):
             if key in self:
                 if self[key] == val:
                     continue
-                raise KeyError("Collision", key)
+                raise KeyError("Collision with key {}".format(key))
             self[key] = val  # __setitem__ does type-checking
 
     def __add__(self, other):

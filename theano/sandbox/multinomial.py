@@ -34,9 +34,9 @@ class MultinomialFromUniform(Op):
         pvals = T.as_tensor_variable(pvals)
         unis = T.as_tensor_variable(unis)
         if pvals.ndim != 2:
-            raise NotImplementedError("pvals ndim should be 2", pvals.ndim)
+            raise NotImplementedError("pvals ndim should be 2")
         if unis.ndim != 1:
-            raise NotImplementedError("unis ndim should be 1", unis.ndim)
+            raise NotImplementedError("unis ndim should be 1")
         if self.odtype == "auto":
             odtype = pvals.dtype
         else:
@@ -169,11 +169,7 @@ class MultinomialFromUniform(Op):
 
         if unis.shape[0] != pvals.shape[0] * n_samples:
             raise ValueError(
-                "unis.shape[0] != pvals.shape[0] * n_samples",
-                unis.shape[0],
-                pvals.shape[0],
-                n_samples,
-            )
+                "unis.shape[0] != pvals.shape[0] * n_samples")
         if z[0] is None or z[0].shape != pvals.shape:
             z[0] = np.zeros(pvals.shape, dtype=node.outputs[0].dtype)
         else:
@@ -240,9 +236,9 @@ class ChoiceFromUniform(MultinomialFromUniform):
         pvals = T.as_tensor_variable(pvals)
         unis = T.as_tensor_variable(unis)
         if pvals.ndim != 2:
-            raise NotImplementedError("pvals ndim should be 2", pvals.ndim)
+            raise NotImplementedError("pvals ndim should be 2")
         if unis.ndim != 1:
-            raise NotImplementedError("unis ndim should be 1", unis.ndim)
+            raise NotImplementedError("unis ndim should be 1")
         if self.odtype == "auto":
             odtype = "int64"
         else:
@@ -399,10 +395,7 @@ class ChoiceFromUniform(MultinomialFromUniform):
 
         if unis.shape[0] != pvals.shape[0] * n_samples:
             raise ValueError(
-                "unis.shape[0] != pvals.shape[0] * n_samples",
-                unis.shape[0],
-                pvals.shape[0],
-                n_samples,
+                "unis.shape[0] != pvals.shape[0] * n_samples"
             )
 
         if self.odtype == "auto":

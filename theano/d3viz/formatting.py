@@ -42,7 +42,7 @@ class PyDotFormatter(object):
     def __init__(self, compact=True):
         """Construct PyDotFormatter object."""
         if not pydot_imported:
-            raise ImportError("Failed to import pydot. " + pydot_imported_msg)
+            raise ImportError("Failed to import pydot: {}".format(pydot_imported_msg))
 
         self.compact = compact
         self.node_colors = {

@@ -742,23 +742,21 @@ class MRG_RandomStreams(object):
         # TODO : need description for method, parameter
         if isinstance(seed, integer_types):
             if seed == 0:
-                raise ValueError("seed should not be 0", seed)
+                raise ValueError("seed should not be 0")
             elif seed >= M2:
-                raise ValueError("seed should be less than %i" % M2, seed)
+                raise ValueError("seed should be less than {}".format(M2))
             self.rstate = np.asarray([seed] * 6, dtype="int32")
         elif len(seed) == 6:
             if seed[0] == 0 and seed[1] == 0 and seed[2] == 0:
-                raise ValueError("The first 3 values of seed should not be all 0", seed)
+                raise ValueError("The first 3 values of seed should not be all 0")
             if seed[3] == 0 and seed[4] == 0 and seed[5] == 0:
-                raise ValueError("The last 3 values of seed should not be all 0", seed)
+                raise ValueError("The last 3 values of seed should not be all 0")
             if seed[0] >= M1 or seed[1] >= M1 or seed[2] >= M1:
                 raise ValueError(
-                    "The first 3 values of seed should be less than %i" % M1, seed
-                )
+                    "The first 3 values of seed should be less than {}".format(M1))
             if seed[3] >= M2 or seed[4] >= M2 or seed[5] >= M2:
                 raise ValueError(
-                    "The last 3 values of seed should be less than %i" % M2, seed
-                )
+                    "The last 3 values of seed should be less than {}".format(M2))
             self.rstate = np.asarray(seed, dtype="int32")
         else:
             raise TypeError("seed should be 1 integer or 6 integers")
@@ -904,18 +902,13 @@ class MRG_RandomStreams(object):
                 [isinstance(i, (np.integer, integer_types)) and i <= 0 for i in size]
             ):
                 raise ValueError(
-                    "The specified size contains a dimension with value <= 0", size
-                )
+                    "The specified size contains a dimension with value <= 0")
 
         else:
             if not (isinstance(size, Variable) and size.ndim == 1):
                 raise TypeError(
                     "size must be a tuple of int or a Theano "
-                    "Variable with 1 dimension, got "
-                    + str(size)
-                    + " of type "
-                    + str(type(size))
-                )
+                    "Variable with 1 dimension, got {} of type {}".format(size, type(size)))
         orig_nstreams = nstreams
         if nstreams is None:
             nstreams = self.n_streams(size)
@@ -926,7 +919,7 @@ class MRG_RandomStreams(object):
             d = dict(target=kwargs.pop("target"))
         if len(kwargs) > 0:
             raise TypeError(
-                "uniform() got unexpected keyword arguments %s" % (str(kwargs.keys()))
+                "uniform() got unexpected keyword arguments: {}".format(kwargs.keys())
             )
         node_rstate = shared(rstates, **d)
         u = self.pretty_return(
@@ -997,8 +990,7 @@ class MRG_RandomStreams(object):
         if size is not None:
             if any([isinstance(i, integer_types) and i <= 0 for i in size]):
                 raise ValueError(
-                    "The specified size contains a dimension with value <= 0", size
-                )
+                    "The specified size contains a dimension with value <= 0")
 
         if size is not None:
             raise ValueError(
@@ -1325,29 +1317,25 @@ def _check_size(size):
             return tensor.stack([size], ndim=1)
         else:
             raise ValueError(
-                "Theano variable must have 1 dimension to be a valid size.", size
-            )
+                "Theano variable must have 1 dimension to be a valid size.")
     elif isinstance(size, (np.integer, integer_types)):
         return tensor.constant([size], ndim=1)
     elif not isinstance(size, (tuple, list)):
-        raise ValueError("Size must be a int, tuple, list or Theano variable.", size)
+        raise ValueError("Size must be a int, tuple, list or Theano variable.")
 
     # check entries of list or tuple
     for i in size:
         if isinstance(i, theano.Variable):
             if i.ndim != 0:
-                raise ValueError("Non-scalar Theano variable in size", size, i)
+                raise ValueError("Non-scalar Theano variable in size")
         elif isinstance(i, (np.integer, integer_types)):
             if i <= 0:
                 raise ValueError(
-                    "Non-positive dimensions not allowed in size.", size, i
-                )
+                    "Non-positive dimensions not allowed in size.")
         else:
             raise ValueError(
                 "Only Theano variables and integers are allowed in a size-tuple.",
-                size,
-                i,
-            )
+                )
 
     return tensor.as_tensor_variable(size, ndim=1)
 

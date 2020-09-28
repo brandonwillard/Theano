@@ -201,7 +201,7 @@ def _build_droot_impact(destroy_handler):
             input_root = r
 
             if input_root in droot:
-                raise InconsistencyError("Multiple destroyers of %s" % input_root)
+                raise InconsistencyError("Multiple destroyers of {}".format(input_root))
             droot[input_root] = input_root
             root_destroyer[input_root] = app
 
@@ -359,8 +359,7 @@ class DestroyHandler(toolbox.Bookkeeper):  # noqa
             already_there = True
         if self.fgraph is not None:
             raise Exception(
-                "A DestroyHandler instance can only serve one"
-                " FunctionGraph. (Matthew 6:24)"
+                "A DestroyHandler instance can only serve one FunctionGraph."
             )
         for attr in ("destroyers", "destroy_handler"):
             if hasattr(fgraph, attr):
@@ -451,7 +450,7 @@ class DestroyHandler(toolbox.Bookkeeper):  # noqa
 
     def on_detach(self, fgraph):
         if fgraph is not self.fgraph:
-            raise Exception("detaching wrong fgraph", fgraph)
+            raise Exception("detaching wrong fgraph")
         del self.destroyers
         del self.view_i
         del self.view_o
@@ -536,8 +535,7 @@ class DestroyHandler(toolbox.Bookkeeper):  # noqa
         for o_idx, i_idx_list in vmap.items():
             if len(i_idx_list) > 1:
                 raise NotImplementedError(
-                    "destroying this output invalidates multiple inputs", (app.op)
-                )
+                    "destroying this output invalidates multiple inputs")
             o = app.outputs[o_idx]
             i = app.inputs[i_idx_list[0]]
             self.view_i[o] = i
@@ -714,8 +712,7 @@ class DestroyHandler(toolbox.Bookkeeper):  # noqa
             ]
             if illegal_destroy:
                 raise InconsistencyError(
-                    "Attempting to destroy indestructible variables: %s"
-                    % illegal_destroy
+                    "Attempting to destroy indestructible variables: {}".format(illegal_destroy)
                 )
 
             # add destroyed variable clients as computational dependencies
@@ -783,7 +780,7 @@ class DestroyHandler(toolbox.Bookkeeper):  # noqa
                             i not in tolerated or input is not destroyed_variable
                         ):
                             raise InconsistencyError(
-                                "Input aliasing: %s (%i, %i)" % (app, destroyed_idx, i)
+                                "Input aliasing: {} ({}, {})".format(app, destroyed_idx, i)
                             )
 
                     # add the rule: app must be preceded by all other Apply instances that

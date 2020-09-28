@@ -159,7 +159,7 @@ def as_tensor_variable(x, name=None, ndim=None):
             x = tensor_from_scalar(x)
 
         if not isinstance(x.type, TensorType):
-            raise AsTensorError("Variable type field must be a TensorType.", x, x.type)
+            raise AsTensorError("Variable type field must be a TensorType: {}".format(x))
 
         if ndim is None:
             return x
@@ -204,7 +204,7 @@ def as_tensor_variable(x, name=None, ndim=None):
             str_x = str(x)
         except Exception:
             str_x = repr(x)
-        raise AsTensorError("Cannot convert %s to TensorType" % str_x, type(x))
+        raise AsTensorError("Cannot convert %s to TensorType" % str_x)
 
 
 # this has a different name, because _as_tensor_variable is the

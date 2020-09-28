@@ -29,7 +29,7 @@ class GradTodo(Op):
         return Apply(self, [x], [x.type()])
 
     def perform(self, node, inputs, outputs):
-        raise NotImplementedError("TODO")
+        raise NotImplementedError()
 
 
 grad_todo = GradTodo()
@@ -74,7 +74,7 @@ class FFT(Op):
         _n = tensor.as_tensor(n, ndim=0)
         _axis = tensor.as_tensor(axis, ndim=0)
         if self.half and _frames.type.dtype.startswith("complex"):
-            raise TypeError("Argument to HalfFFT must not be complex", frames)
+            raise TypeError("Argument to HalfFFT must not be complex")
         spectrogram = tensor.zmatrix()
         buf = generic()
         # The `buf` output is present for future work
